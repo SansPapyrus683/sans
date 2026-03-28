@@ -1,0 +1,35 @@
+{
+    "extractor": {
+        "sleep-skip": 2,
+        "twitter":{
+            "filename": "{author[name]}_{tweet_id}_{num}.{extension}",
+            "cookies": ["edge"],
+            "retweets": true,
+            "directory": ["{user[name]}"]
+        },
+        "lofter": {
+            "cookies": ["edge"],
+            "blog-posts": {
+                "filename": "{citeParentBlogInfo[blogName]}_{permalink}_{num}.{extension}"
+            },
+            "post": {
+                "filename": "{blogInfo[blogName]}_{permalink}_{num}.{extension}"
+            },
+            "directory": ["lofter"]
+        },
+        "bluesky": {
+            "reposts": true,
+            "filename": "{author[handle]}_{post_id}_{num}.{extension}",
+            "directory": ["bluesky"]
+        }
+    },
+    "downloader": {
+
+    },
+    "output": {
+
+    },
+    "postprocessor": {
+
+    }
+}

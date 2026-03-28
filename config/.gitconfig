@@ -1,0 +1,13 @@
+[user]
+	name = Kevin Sheng
+	email = kevinsheng2005@gmail.com
+[credential]
+	helper = store
+[core]
+	editor = nvim
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+[init]
+	defaultBranch = main
