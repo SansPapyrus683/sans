@@ -1,34 +1,30 @@
 import os
+import sys
 from collections import defaultdict
-import re
-import shutil
 
 from PIL import Image
 import imagehash
 
-fmt = re.compile(r"(\d+)_(.*)_(\d+)\.")
+from parse import Post
 
-path = os.path.expanduser("/run/media/sanspapyrus683/PHILIPS/twitter")
-
-os.chdir(path)
+os.chdir(sys.argv[1])
 
 tweets = defaultdict(lambda: defaultdict(list))
 for i in os.listdir():
+    # i... idk how to compare mp4s i'm not even gonna lie
     if i.endswith(".mp4"):
         continue
-
-    match = fmt.match(i)
-    id_ = int(match.group(1))
-    author = match.group(2)
-    pos = int(match.group(3))
-    tweets[author][id_].append((pos, i, imagehash.average_hash(Image.open(i))))
+    post = Post.from_str(i)
+    hash_ = imagehash.average_hash(Image.open(i))
+    tweets[post.author][post.id].append((post, hash_))
 
 to_del = []
 duped = []
 for author, g in tweets.items():
+    # we wanna removes dupes with the lower id
     ids = sorted(g.keys())
     for i in ids:
-        g[i].sort()
+        g[i].sort()  # and on each id the images should be in order
 
     for i in range(len(ids)):
         g1 = g[ids[i]]
@@ -51,8 +47,8 @@ for v, (g1, g2) in enumerate(duped):
     for u, (a, b) in enumerate(zip(g1, g2)):
         ext1 = os.path.splitext(a[1])[1]
         ext2 = os.path.splitext(b[1])[1]
-        shutil.copy(a[1], f"../asdf/{v}_{u}_0.{ext1}")
-        shutil.copy(b[1], f"../asdf/{v}_{u}_1.{ext2}")
+        shutil.copy(a[1], f"dupes/{v}_{u}_0.{ext1}")
+        shutil.copy(b[1], f"dupes/{v}_{u}_1.{ext2}")
 """
 
 for d in to_del:

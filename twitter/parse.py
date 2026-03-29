@@ -2,7 +2,7 @@ import os
 import re
 from dataclasses import dataclass
 
-TWITTER_FMT = re.compile(r"^(\d+)_(\w+)_(\d+)")
+TWITTER_FMT = re.compile(r"^(\w+)_(\d+)_(\d+)")
 
 
 @dataclass
@@ -21,5 +21,5 @@ class Post:
         if (parsed := TWITTER_FMT.match(name)) is None:
             return None
 
-        id_, author, pos = parsed.groups()
+        author, id_, pos = parsed.groups()
         return cls(author, int(id_), int(pos), ext)

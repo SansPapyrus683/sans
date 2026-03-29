@@ -1,9 +1,8 @@
 import sys
 import os
-import re
+from parse import Post
 
-migrate_dir = "<RELEVANT DIRECTORY>"
-fmt = re.compile(r"(\d+)_(.*)_(\d+)\.")
+migrate_dir = "/home/sanspapyrus683/Downloads/gallery-dl/isitp2w"
 
 old_handle = sys.argv[1].lower()
 new_handle = sys.argv[2]
@@ -12,17 +11,10 @@ if input().lower() not in ["y", "yes"]:
     sys.exit()
 
 os.chdir(migrate_dir)
-to_rename = []
+
 for i in os.listdir():
-    match = fmt.match(i)
-    id_ = int(match.group(1))
-    author = match.group(2)
-    pos = int(match.group(3))
-    ext = os.path.splitext(i)[1]
-
-    if author.lower() == old_handle:
-        to_rename.append((i, f"{id_}_{new_handle}_{pos}{ext}"))
-
-for old, new in to_rename:
-    print(old, new)
-    os.rename(old, new)
+    post = Post.from_str(i)
+    if post.author.lower() != old_handle:
+        continue
+    post.author = new_handle
+    os.rename(i, str(post))
