@@ -1,13 +1,28 @@
-import sys
 import os
 from datetime import datetime, timedelta
 from itertools import groupby
+import argparse
 
 from parse import Post
 
-os.chdir(sys.argv[1])
+cmd_args = argparse.ArgumentParser(prog="post validator")
+cmd_args.add_argument("directory")
+cmd_args.add_argument("-r", "--only-recent", action="store_true")
+args = cmd_args.parse_args()
+os.chdir(args.directory)
 
-all_tweets = [Post.from_str(i) for i in os.listdir()]
+base_tweets = os.listdir()
+if args.only_recent:
+    new_tweets = []
+    today = datetime.today().date()
+    for i in base_tweets:
+        ctime = os.path.getctime(i)
+        cdate = datetime.fromtimestamp(ctime).date()
+        if cdate == today:
+            new_tweets.append(i)
+    base_tweets = new_tweets
+
+all_tweets = [Post.from_str(i) for i in base_tweets]
 all_tweets.sort(key=lambda t: (t.id, t.pos))
 
 for id_, tweet in groupby(all_tweets, lambda t: t.id):
