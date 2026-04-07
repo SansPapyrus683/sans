@@ -42,15 +42,14 @@ export NVM_DIR="$HOME/.nvm"
 alias ipython="ipython3"
 alias trash="rm -rf ~/.local/share/Trash/*"
 alias vim="nvim"
-alias config="nvim ~/.zshrc; source ~/.zshrc" # no idea if this is a good idea or not
+alias config="nvim ~/.zshrc; source ~/.zshrc"
 alias nvimcfg="nvim ~/.config/nvim/init.lua"
 alias onedrive-log="journalctl --user-unit=onedrive -f"
-alias edging="rm -rf ~/.config/microsoft-edge/Singleton*"
 alias g31="g++ -std=c++17 -Wall -Wextra -Wno-sign-compare -Werror=return-type -Wl,--rpath=/usr/local/cs/lib64 -fsanitize=address -fsanitize=undefined -fsanitize=bounds -fno-omit-frame-pointer"
 
 export PATH=$PATH:/home/sanspapyrus683/.local/bin
-export PAGER=most
 export EDITOR=nvim
+export LESS="--mouse --wheel-lines=5 -R -I" 
 
 print_pdf() {
     enscript -E -q -Z -p - $1 | ps2pdf - ${1%.*}.pdf
