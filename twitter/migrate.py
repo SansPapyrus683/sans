@@ -1,5 +1,6 @@
-import sys
 import os
+import sys
+
 from parse import Post
 
 migrate_dir = "/home/sanspapyrus683/Downloads/gallery-dl/isitp2w"
