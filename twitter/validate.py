@@ -12,6 +12,8 @@ args = cmd_args.parse_args()
 
 
 def validate_directory(dir_: str):
+    print(f"Validating {dir_}")
+
     initial_dir = os.getcwd()
     os.chdir(dir_)
 
