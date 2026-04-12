@@ -2,6 +2,7 @@ import argparse
 import os
 import shutil
 from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
 
 import imagehash
@@ -25,15 +26,25 @@ cmd_args.add_argument(
 args = cmd_args.parse_args()
 os.chdir(args.directory)
 
+to_check = set()
+if args.only_recent:
+    today = datetime.today().date()
+    for i in os.listdir():
+        author = Post.from_str(i).author
+        ctime = os.path.getctime(i)
+        cdate = datetime.fromtimestamp(ctime).date()
+        if cdate == today:
+            to_check.add(author)
+
 tweets = defaultdict(lambda: defaultdict(list))
 for i in os.listdir():
-    # i... idk how to compare mp4s i'm not even gonna lie
-    if i.endswith(".mp4"):
-        continue
     post = Post.from_str(i)
+    should_check = post.author in to_check or not args.only_recent
+    # i... idk how to compare mp4s i'm not even gonna lie
+    if i.endswith(".mp4") or not should_check:
+        continue
     hash_ = imagehash.average_hash(Image.open(i))
     tweets[post.author][post.id].append((post, hash_))
-
 
 to_del = []
 duped = []
@@ -60,7 +71,6 @@ for author, g in tweets.items():
                 duped.append((g1, g2))
                 break
 
-
 if args.test_run:
     Path("dupes").mkdir(exist_ok=True)
     for v, (g1, g2) in enumerate(duped):
@@ -71,4 +81,6 @@ if args.test_run:
             shutil.copy(b_name, f"dupes/{v}_{u}_1.{b[0].ext}")
 else:
     for d in to_del:
-        os.remove(str(d[0]))
+        name = str(d[0])
+        print(f"deleting {name}")
+        os.remove(name)
