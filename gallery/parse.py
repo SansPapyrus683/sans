@@ -2,7 +2,8 @@ import os
 import re
 from dataclasses import dataclass
 
-TWITTER_FMT = re.compile(r"^(\w+)_(\d+)_(\d+)")
+# the format i use for both tumblr ad twitter posts
+POST_FMT = re.compile(r"^([-\w]+)_(\d+)_(\d+)")
 
 
 @dataclass
@@ -18,7 +19,7 @@ class Post:
     @classmethod
     def from_str(cls, file: str) -> Post | None:
         name, ext = os.path.splitext(file)
-        if (parsed := TWITTER_FMT.match(name)) is None:
+        if (parsed := POST_FMT.match(name)) is None:
             return None
 
         author, id_, pos = parsed.groups()

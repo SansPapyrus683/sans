@@ -1,3 +1,18 @@
+"""
+given a list of directories, this script does a couple of things
+
+for each directory, it checks the following:
+1. each post's numbers are a prefix of the natural numbers (so no missing images)
+2. a single post id doesn't correspond to multiple authors
+   (not really relevant for me anymore since i use gallery-dl,
+    but might still be useful as a sanity check)
+
+it also modifies mtime of files s.t. sorting by last modified will
+give you an order as if you were scrolling through your actual timeline
+
+this script assumes that all posts meet the regex described in parse.py
+"""
+
 import argparse
 import os
 from datetime import datetime, timedelta
@@ -26,6 +41,8 @@ def validate_directory(dir_: str):
         all_nums = [t.pos for t in tweet]  # sorting taken care of by initial ordering
 
         if len(all_authors) > 1:
+            # this error shouldn't get hit anymore since i've switched to gallery-dl
+            # but ig it's still nice as a sanity check
             print(f"tweet {id_} has multiple authors (handle change?): {all_authors}")
         if all_nums != list(range(1, len(all_nums) + 1)):
             print(f"tweet {id_} seems to be missing some photos- i only see {all_nums}")
@@ -48,7 +65,7 @@ def validate_directory(dir_: str):
     for v, t in enumerate(new_tweets):
         delta = (now - timedelta(seconds=3 * v) - epoch).total_seconds()
         os.utime(str(t), times=(delta, delta))
-    
+
     os.chdir(initial_dir)
 
 
