@@ -71,6 +71,7 @@ for author, g in tweets.items():
                 duped.append((g1, g2))
                 break
 
+do_delete = not args.test_run
 if args.test_run:
     Path("dupes").mkdir(exist_ok=True)
     for v, (g1, g2) in enumerate(duped):
@@ -79,7 +80,11 @@ if args.test_run:
             b_name = str(b[0])
             shutil.copy(a_name, f"dupes/{v}_{u}_0.{a[0].ext}")
             shutil.copy(b_name, f"dupes/{v}_{u}_1.{b[0].ext}")
-else:
+
+    response = input("ok check if everything's fine\n")
+    do_delete = response.lower() in ["y", "yes"]
+
+if do_delete:
     for d in to_del:
         name = str(d[0])
         print(f"deleting {name}")
