@@ -22,8 +22,7 @@ for dir in "$from"/*/; do
     [ -d "$dir" ] || continue
 
     dest="$to/$(basename $dir)"
-
-    echo $dir $dest
+    echo "$dir -> $dest"
 
     find $dir \
         -type f -cmin -10 \
