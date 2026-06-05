@@ -31,3 +31,11 @@ ipython3 profile create
 echo 'c = get_config();
 c.TerminalInteractiveShell.highlighting_style = "nord"' \
 > ~/.ipython/profile_default/ipython_config.py
+
+echo "extracting/putting cursors in"
+mkdir -p ~/.icons
+
+for cursor in cursors/*.tar.gz; do
+    [ -f "$cursor" ] || break
+    tar xf "$cursor" --directory ~/.icons
+done
