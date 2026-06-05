@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# webp can genuinely go shoot itself
+
 DIR="${1:-.}" # defaults to current directory
 
 # i'm ngl i have gpt write all my bash scripts
