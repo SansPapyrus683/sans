@@ -22,9 +22,19 @@ for dir in "$from"/*/; do
     [ -d "$dir" ] || continue
 
     dest="$to/$(basename $dir)"
-    echo "$dir -> $dest"
+    echo "copying from $dir -> $dest"
 
-    find $dir \
-        -type f -cmin -10 \
-        -exec cp -np {} $dest \;
+    copied=0
+    while IFS= read -r -d '' src; do
+        dst="$dest/$(basename "$src")"
+
+        if [ -e "$dst" ]; then
+            echo "EXISTS: $dst"
+        else
+            cp -p "$src" "$dst"
+            copied=$((copied + 1))
+        fi
+    done < <(find "$dir" -type f -cmin -10 -print0)
+
+    echo "Total files copied: $copied"
 done
