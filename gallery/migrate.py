@@ -20,4 +20,4 @@ for i in os.listdir():
         continue
     post.author = new_handle
     print(f"{i} -> {post}")
-    # os.rename(i, str(post))
+    os.rename(i, str(post))

@@ -47,7 +47,7 @@ alias nvimcfg="nvim ~/.config/nvim/init.lua"
 alias onedrive-log="journalctl --user-unit=onedrive -f"
 alias g31="g++ -std=c++17 -Wall -Wextra -Wno-sign-compare -Werror=return-type -Wl,--rpath=/usr/local/cs/lib64 -fsanitize=address -fsanitize=undefined -fsanitize=bounds -fno-omit-frame-pointer"
 
-export PATH=$PATH:/home/sanspapyrus683/.local/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.cargo/bin
 export EDITOR=nvim
 export LESS="--mouse --wheel-lines=5 -R -I" 
 
