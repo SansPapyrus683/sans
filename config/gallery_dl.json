@@ -1,11 +1,13 @@
 {
     "extractor": {
-        "sleep-skip": 2,
         "twitter":{
             "filename": "{author[name]}_{tweet_id}_{num}.{extension}",
             "cookies": ["edge"],
             "retweets": true,
-            "directory": ["{user[name]}"]
+            "directory": ["{user[name]}"],
+            "tweet": {
+                "directory": ["misc"]
+            }
         },
         "lofter": {
             "cookies": ["edge"],
@@ -21,6 +23,10 @@
             "reposts": true,
             "filename": "{author[handle]}_{post_id}_{num}.{extension}",
             "directory": ["bluesky"]
+        },
+        "tumblr": {
+            "directory": ["tumblr"],
+            "filename": "{reblogged_root_name}_{id}_{num}.{extension}"
         }
     },
     "downloader": {
