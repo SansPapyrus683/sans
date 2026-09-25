@@ -11,8 +11,6 @@ vim.opt.softtabstop = 4
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.opt.guicursor="a:ver10"
-
 -- https://superuser.com/a/35421/1503424
 vim.opt.whichwrap:append("<,>,h,l,[,]")
 
