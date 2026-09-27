@@ -65,9 +65,7 @@ nvim --headless +PlugInstall +qall
 
 echo "creating ipython config"
 ipython3 profile create
-echo 'c = get_config();
-c.TerminalInteractiveShell.highlighting_style = "nord"' \
-> ~/.ipython/profile_default/ipython_config.py
+cp ipython_config.py ~/.ipython/profile_default
 
 echo "extracting/putting cursors in"
 mkdir -p ~/.icons
