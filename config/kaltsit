@@ -21,4 +21,5 @@ hello_kitty () {
   fi
 }
 
-hello_kitty
+# i like the behavior of good_kitty more here tbh ~sans
+good_kitty
