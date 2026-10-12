@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# should be run from sans/config (the folder this script is in)
+# installs all the packages that i want and puts most of the config stuff where
+# it should be, maybe you can get some mileage out of it too!
+
 echo "installing all my packages"
 sudo dnf install g++ python3-devel pip ipython3 gnome-tweaks neovim zsh curl tree \
  fira-code-fonts comic-neue-fonts onedrive libasan libubsan java-latest-openjdk-devel \
@@ -38,6 +42,11 @@ onedrive  # login or whatever first
 systemctl --user enable onedrive
 systemctl --user start onedrive
 
+# i don't really use any of these folders tbh
+rm -rf ~/Documents ~/Pictures ~/Music ~/Videos ~/Public ~/Desktop
+ln -S ~/Documents ~/OneDrive/Documents
+ln -S ~/Pictures ~/OneDrive/Pictures
+
 # these just sit in the home directory no real setup besides that
 cp kaltsit .gitconfig ~
 chmod +x ~/kaltsit
@@ -48,7 +57,6 @@ cp .zshrc ~
 
 echo "setting up kitty"
 mkdir -p ~/.config/kitty
-# this script should be run from the config folder
 cp kitty.conf ~/.config/kitty
 kitten themes Nord
 
