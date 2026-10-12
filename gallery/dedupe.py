@@ -8,6 +8,7 @@ from pathlib import Path
 import imagehash
 from parse import Post
 from PIL import Image
+from tqdm import tqdm
 
 cmd_args = argparse.ArgumentParser(prog="post validator")
 cmd_args.add_argument("directory")
@@ -21,7 +22,7 @@ cmd_args.add_argument(
     "-t",
     "--test-run",
     action="store_true",
-    help="copy them into a new directory called dupes to check if they actually are (doesn't delete anything)",
+    help="first copies the dupe files into a test directory"
 )
 args = cmd_args.parse_args()
 os.chdir(args.directory)
@@ -37,7 +38,7 @@ if args.only_recent:
             to_check.add(author)
 
 tweets = defaultdict(lambda: defaultdict(list))
-for i in os.listdir():
+for i in tqdm(os.listdir()):
     post = Post.from_str(i)
     should_check = post.author in to_check or not args.only_recent
     # i... idk how to compare mp4s i'm not even gonna lie
