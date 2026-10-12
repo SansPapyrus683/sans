@@ -40,7 +40,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias ipython="ipython3"
-alias trash="rm -rf ~/.local/share/Trash/*"
+alias trash="gio trash --empty"
 alias vim="nvim"
 alias config="nvim ~/.zshrc; source ~/.zshrc"
 alias nvimcfg="nvim ~/.config/nvim/init.lua"
